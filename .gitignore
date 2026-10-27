@@ -1,0 +1,24 @@
+# Python junk
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Environments (ours lives outside the folder, but just in case)
+.venv/
+venv/
+env/
+
+# Secrets: API keys, passwords, Streamlit secrets
+.env
+.env.*
+*.key
+*.pem
+.streamlit/secrets.toml
+
+# Editor and OS clutter (VS Code settings can hold this PC's paths)
+.vscode/
+~$*
+Thumbs.db
+desktop.ini
+.DS_Store
+*.log
