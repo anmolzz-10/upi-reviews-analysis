@@ -15,7 +15,7 @@ UPI apps compete on trust and reliability. A failed payment or a stuck refund sh
 - **Source:** public Google Play Store reviews, Indian store, English interface setting.
 - **Window:** the last 60 days before collection, 28 Aug to 26 Oct 2026, collected on 27 Oct 2026. A fixed window is used so apps can be compared fairly.
 - **Size:** 66,475 reviews (PhonePe 29,959, Paytm 21,951, Google Pay 8,559, BHIM 4,257, CRED 1,749).
-- **Privacy:** reviewer names and profile pictures are never stored. The raw file is kept out of this repository because review text can contain personal details. Personal details are masked before any text is shared or analysed.
+- **Privacy:** reviewer names and profile pictures are never stored. The raw file is kept out of this repository because review text can contain personal details. In the processed file, reviews with contact details are fully redacted, reference numbers are masked, and review text is kept only for the roughly 14,000 reviews used in theme analysis. Every review keeps its rating, date and helper columns.
 - **Reproducing it:** the raw reviews are not in the repo. Running `notebooks/01_collect.ipynb` collects a fresh 60-day window counted back from the run date, so numbers will differ from those in this README.
 
 More detail is in [`data/raw/collection_note.md`](data/raw/collection_note.md).
@@ -23,7 +23,7 @@ More detail is in [`data/raw/collection_note.md`](data/raw/collection_note.md).
 ## Approach
 
 1. **Collect** 60 days of reviews for five apps (done).
-2. **Clean, profile and mask:** handle duplicates and low-information text, mask phone numbers, UPI IDs and similar personal details, and log every issue and decision.
+2. **Clean, profile and protect:** profile duplicates and low-information text, redact reviews that contain contact details, mask reference numbers, and log every issue and decision.
 3. **Tag complaint themes** on the detailed reviews (most reviews are only a word or two) using an open-weight LLM, saved as structured fields.
 4. **Validate** the tags against about 150 hand-labelled reviews and a classical TF-IDF + logistic regression baseline.
 5. **Analyse** theme share by app, trends across time and app versions, and a regression of rating on themes to rank which problems cost the most rating points.
@@ -33,7 +33,7 @@ More detail is in [`data/raw/collection_note.md`](data/raw/collection_note.md).
 
 - [x] Environment and repo setup
 - [x] Phase 1: collect reviews (66,475 reviews, 60-day window)
-- [ ] Phase 2: clean, profile and mask
+- [x] Phase 2: clean, profile and protect (see [`docs/data-quality-log.md`](docs/data-quality-log.md))
 - [ ] Phase 3: LLM theme tagging
 - [ ] Phase 4: validation
 - [ ] Phase 5: analysis and findings
@@ -60,12 +60,12 @@ upi-reviews-analysis/
 ├── data/
 │   ├── raw/          # collection note only; the raw reviews are kept private
 │   ├── interim/      # intermediate files
-│   └── processed/    # masked, analysis-ready tables
+│   └── processed/    # protected, analysis-ready table (text kept only for tagging candidates)
 ├── notebooks/        # numbered notebooks, run in order
 ├── app/              # Streamlit app
 ├── excel/            # stakeholder summary workbook
 ├── powerbi/          # Power BI file and screenshots
-├── docs/             # decision log, data-quality log and notes
+├── docs/             # decision log and data-quality log
 ├── requirements.txt
 └── environment.yml
 ```
@@ -89,10 +89,10 @@ Open the folder in VS Code, choose the `upi-reviews` interpreter, and run the no
 - There is no revenue data, so impact is measured in rating points and complaint share, not rupees.
 - Public reviews skew toward very happy or very unhappy users and do not represent all users.
 - The data is a 60-day snapshot, collected with English interface settings, so it can miss Hindi-language reviews and anything outside the window.
-- Many reviews are very short and repeated (about 53% share their exact text with another review for the same app), so theme analysis relies on the smaller set of detailed reviews.
+- Many reviews are very short and repeated (about 56% repeat the text of another review for the same app, ignoring case and punctuation), so theme analysis relies on the smaller set of detailed reviews.
 - A regression shows association, not proof of cause.
 - Theme tags come from an LLM and are checked against a hand-labelled sample. They are not perfect.
-- Masking removes common personal details but cannot guarantee full anonymity.
+- Redaction and masking reduce personal-data risk but cannot guarantee anonymity. Some people type their own name as a review, and a few names inside longer reviews can remain.
 
 ## How I built this
 

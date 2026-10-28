@@ -25,8 +25,10 @@ A running record of the project's decisions, kept as the work happens. Each row 
 | 9 | Setup | Public repo; raw review file kept out of Git | Commit the raw CSV | Review text can contain phone numbers or UPI IDs | AI, accepted [confirm] |
 | 10 | Phase 1 | Fixed 60-day window for every app | 5,000 reviews per app | First run gave windows from 10 to 151 days, so apps weren't comparable | AI spotted it from my output; I re-ran with the fix |
 | 11 | Phase 1 | Never store reviewer names or pictures | Keep them and drop later | Privacy by default | AI, accepted |
-| 12 | Phase 2 | Keep every row for rating analysis; tag only detailed reviews for themes | Tag everything; delete duplicates | 65% of reviews are two words or fewer; the rest carry the complaint text | **Pending: decide in Phase 2** |
+| 12 | Phase 2 | Keep every row for rating analysis; tag only reviews with enough text: letters, and either 6+ words or rating 1-2 with 3+ words (13,933 reviews) | Tag everything; delete duplicates | 65% of reviews are two words or fewer; the rest carry the complaint text. The rating 1-2 rule keeps short complaints like "payment failed again". | AI proposed from the data profile, accepted [confirm] |
 | 13 | Later | Optional weekly refresh (GitHub Actions) | No automation | The data source is live, so a monitor has a real purpose. Needs a test run first. | **Pending: raised by me, decide after Phase 6** |
+| 14 | Phase 2 | Contact details (phone, UPI ID, email, @handle) cause the whole review text to be redacted; reference numbers are masked in place | Mask only the matched pattern | People who paste contact details often sign with a name, and patterns cannot catch names | AI, accepted [confirm] |
+| 15 | Phase 2 | Keep review text in the processed file only for the tagging candidates | Keep all text | Some reviews are just a person's name. The scan found them, and patterns cannot detect names. Rating analysis does not need the text. | AI proposed after the scan; accepted [confirm] |
 
 ## Phase notes
 
@@ -37,10 +39,10 @@ For each phase, three short lines written at the end of the phase, in my own wor
 - **What I checked myself:** _fill in (for example: that app totals add up, that rating mixes sum to 100%)_
 - **What surprised me:** BHIM's recent reviews average 2.77 against 4.47 on its Play Store page, and CRED 3.36 against 4.76. About 53% of reviews repeat another review's text for the same app, mostly one or two words.
 
-### Phase 2: Clean, profile and mask
-- **What I did:** _fill in_
-- **What I checked myself:** _fill in_
-- **What surprised me:** _fill in_
+### Phase 2: Clean, profile and protect
+- **What I did:** profiled the 66,475 reviews, found no duplicate IDs, blank text or invalid ratings, protected personal details, and flagged 13,933 reviews for theme tagging.
+- **What I checked myself:** _fill in (for example: compared my notebook run with the expected numbers, read the log)_
+- **What surprised me:** only 21 reviews contained personal details, but some people simply type their own name as the review. About 56% of reviews repeat another review's text. Developer reply rates range from 8.6% (Google Pay) to 99.9% (BHIM). PhonePe had one day (18 Sep) where 31% of 632 reviews were 1-star against a 9% average.
 
 _(Add a section per phase as we go.)_
 
