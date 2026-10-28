@@ -22,3 +22,4 @@ Thumbs.db
 desktop.ini
 .DS_Store
 *.log
+data/raw/reviews_raw.csv
