@@ -23,7 +23,7 @@ Source file: `data/raw/reviews_raw.csv` (66,475 reviews). Numbers below are prod
 | 17 | Hindi (Devanagari) script | 692 | 1.0% | Kept and flagged. The LLM step can read it, but volume is small. |
 | 18 | Review text repeats another review in the same app (extra copies) | 37,186 | 55.9% | Kept, not deleted. Short phrases like 'good' are repeated by real users. Flagged with text_repeat_count. |
 | 19 | Possible copy-paste or spam (6+ words, repeated 3+ times) | 8 | 0.0% | Kept and flagged through text_repeat_count. Reviewed again in Phase 5. |
-| 20 | Reviews selected for theme tagging (tag_candidate) | 13,933 | 21.0% | Flagged. Phase 3 tags only these, and removes repeated texts before tagging to save compute. |
+| 20 | Reviews selected for theme tagging (tag_candidate) | 13,933 | 21.0% | Flagged. Phase 3 tags all of them. Only about 200 are repeated texts, so removing repeats would save little. |
 | 21 | Review text not stored in the processed file (not needed for theme analysis) | 52,542 | 79.0% | Replaced with [not stored]. Reason: some reviews are just a person's name, which patterns cannot detect. Ratings, dates and helper columns are kept for these reviews. |
 
 ## Observations (not defects)

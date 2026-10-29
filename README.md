@@ -25,7 +25,7 @@ More detail is in [`data/raw/collection_note.md`](data/raw/collection_note.md).
 1. **Collect** 60 days of reviews for five apps (done).
 2. **Clean, profile and protect:** profile duplicates and low-information text, redact reviews that contain contact details, mask reference numbers, and log every issue and decision.
 3. **Tag complaint themes** on the detailed reviews (most reviews are only a word or two) using an open-weight LLM, saved as structured fields.
-4. **Validate** the tags against about 150 hand-labelled reviews and a classical TF-IDF + logistic regression baseline.
+4. **Validate** the tags against a labelled sample of about 150 reviews and a classical TF-IDF + logistic regression baseline.
 5. **Analyse** theme share by app, trends across time and app versions, and a regression of rating on themes to rank which problems cost the most rating points.
 6. **Deliver** a live Streamlit app, an Excel stakeholder summary, and a Power BI dashboard.
 
@@ -91,12 +91,12 @@ Open the folder in VS Code, choose the `upi-reviews` interpreter, and run the no
 - The data is a 60-day snapshot, collected with English interface settings, so it can miss Hindi-language reviews and anything outside the window.
 - Many reviews are very short and repeated (about 56% repeat the text of another review for the same app, ignoring case and punctuation), so theme analysis relies on the smaller set of detailed reviews.
 - A regression shows association, not proof of cause.
-- Theme tags come from an LLM and are checked against a hand-labelled sample. They are not perfect.
+- Theme tags come from an LLM and are checked against a labelled sample. They are not perfect.
 - Redaction and masking reduce personal-data risk but cannot guarantee anonymity. Some people type their own name as a review, and a few names inside longer reviews can remain.
 
 ## How I built this
 
-I use Claude, an AI assistant, throughout this project. It writes most of the code and helps with planning and debugging. I make the final call on every decision, and [`docs/decision-log.md`](docs/decision-log.md) records each one, including which ideas were mine, which were AI suggestions I accepted, and which I rejected. The theme definitions, the hand-labelled validation sample and the recommendations are my own work.
+I use Claude, an AI assistant, for most of the implementation: code, analysis and drafting. I set the question, scope and tools, review the results, and make the final call on each decision. [`docs/decision-log.md`](docs/decision-log.md) records every decision and whose idea it was, including AI suggestions I accepted and ideas I rejected. How the validation sample was labelled will be described in this repo once that phase is done.
 
 ## Author
 
